@@ -73,11 +73,11 @@
 #define ANALOG_STICK_NEUTRAL 128
 #define ANALOG_STICK_MAX 255
 
-TaikoDrums::TaikoDrums(socd::SocdType socd_type) : ControllerMode(socd_type) {
+TaikoDrums::TaikoDrums(socd::SocdType socd_type){
     _socd_pair_count = 2;
     _socd_pairs = new socd::SocdPair[_socd_pair_count]{
-        socd::SocdPair{&InputState::left,    &InputState::right  },
-        socd::SocdPair{ &InputState::down,   &InputState::up     },
+        socd::SocdPair{&InputState::left,    &InputState::right, socd_type  },
+        socd::SocdPair{ &InputState::down,   &InputState::up, socd_type    },
     };
 }
 
@@ -103,13 +103,11 @@ void TaikoDrums::UpdateDigitalOutputs(InputState &inputs, OutputState &outputs) 
     // RIGHT RED
     // INPUTS: C_DOWN, B, X
     // OUTPUTS: ( B / Y) 
-    //outputs.b = inputs.c_down; 
-    outputs.b = inputs.b;
+    outputs.b = inputs.c_down || inputs.b;
     outputs.y = inputs.x;
     // Control Row (Right Hand Top Row)
-    // INPUTS: R, Y, LS, MS
-    // OUTPUTS: ( A / X / SELECT / HOME )
-    //outputs.a = inputs.r;
+    // INPUTS: Y, LS, MS
+    // OUTPUTS: ( X / SELECT / HOME )
     outputs.x = inputs.y;
     outputs.select = inputs.lightshield;
     outputs.home = inputs.midshield;

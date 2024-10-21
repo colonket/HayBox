@@ -10,8 +10,8 @@ class TaikoDrums : public ControllerMode {
     TaikoDrums(socd::SocdType socd_type);
 
   private:
-    void UpdateDigitalOutputs(InputState &inputs, OutputState &outputs);
-    void UpdateAnalogOutputs(InputState &inputs, OutputState &outputs);
+    virtual void UpdateDigitalOutputs(InputState &inputs, OutputState &outputs);
+    virtual void UpdateAnalogOutputs(InputState &inputs, OutputState &outputs);
 };
 
 #endif
