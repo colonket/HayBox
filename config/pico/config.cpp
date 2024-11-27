@@ -99,6 +99,15 @@ void setup() {
             primary_backend->SetGameMode(new RivalsOfAether(socd::SOCD_2IP));
         
             return;
+        } else if (button_holds.r) {
+            //  USB + Hold R ==  Rivals 2
+            backend_count = 2;
+            primary_backend = new XInputBackend(input_sources, input_source_count);
+            backends = new CommunicationBackend *[backend_count] {
+                primary_backend, new B0XXInputViewer(input_sources, input_source_count)
+            };
+            primary_backend->SetGameMode(new Rivals2(socd::SOCD_2IP));
+            return;
         } else if (button_holds.x) {
             // USB + Hold X == Nintendo Switch Backend in Ultimate Mode
             NintendoSwitchBackend::RegisterDescriptor();
@@ -142,6 +151,10 @@ void setup() {
             // GCC + Hold B ==  Rivals
             primary_backend->SetGameMode(new RivalsOfAether(socd::SOCD_2IP));
             return;
+        } else if (button_holds.r) {
+            //  GCC + Hold R ==  Rivals 2
+            primary_backend->SetGameMode(new Rivals2(socd::SOCD_2IP));
+            return;
         } else if (button_holds.x) {
             //  GCC + Hold X ==  Ultimate
             primary_backend->SetGameMode(new Ultimate(socd::SOCD_2IP));
@@ -160,9 +173,11 @@ void setup() {
             return;
         }
     }
+    // Default to Rivals 2 Mode
+    primary_backend->SetGameMode(new Rivals2(socd::SOCD_2IP));
 
     // Default to Ultimate Mode
-    primary_backend->SetGameMode(new Ultimate(socd::SOCD_2IP));
+    //primary_backend->SetGameMode(new Ultimate(socd::SOCD_2IP));
 
     /**
     // Default to Melee mode.

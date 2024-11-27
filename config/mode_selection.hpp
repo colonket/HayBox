@@ -35,6 +35,7 @@ void set_mode(CommunicationBackend *backend, KeyboardMode *mode) {
 void select_mode(CommunicationBackend *backend) {
     InputState &inputs = backend->GetInputs();
     if (inputs.mod_x && !inputs.mod_y && inputs.start) {
+        // MX + Start + ? = Select Game Mode
         if (inputs.l) {
             set_mode(
                 backend,
@@ -60,6 +61,7 @@ void select_mode(CommunicationBackend *backend) {
             set_mode(backend, new TaikoDrums(socd::SOCD_NEUTRAL));
         }
     } else if (inputs.mod_y && !inputs.mod_x && inputs.start) {
+        // MY + Start + ? = Select Game Mode
         if (inputs.l) {
             set_mode(backend, new DefaultKeyboardMode(socd::SOCD_2IP));
         }
